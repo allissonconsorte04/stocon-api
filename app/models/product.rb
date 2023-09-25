@@ -3,4 +3,5 @@ class Product < ApplicationRecord
   has_many :inventories, through: :inventories_products
 
   belongs_to :category
+  belongs_to :supplier
 end
