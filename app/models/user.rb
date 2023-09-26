@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+    has_secure_password
+
     before_validation :set_default_role, on: :create
 
     belongs_to :role
