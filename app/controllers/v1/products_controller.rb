@@ -3,14 +3,13 @@ class V1::ProductsController < ApplicationController
 
   # GET /products
   def index
-    @products = Product.all
-
-    render json: @products
+    @products = Product.includes(:supplier, :category).all
+    render json: @products.to_json(include: { supplier: { exception: [:created_at, :updated_at ] }, category: {exception: [:created_at, :updated_at]}})
   end
 
   # GET /products/1
   def show
-    render json: @product
+    render json: @product.to_json(include: { supplier: { exception: [:created_at, :updated_at ] }, category: {exception: [:created_at, :updated_at]}})
   end
 
   # POST /products
@@ -46,6 +45,6 @@ class V1::ProductsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def product_params
-      params.require(:product).permit(:name, :description, :price, :quantity, :category_id, :measurement, :supplier_id)
+      params.require(:product).permit(:name, :description, :price, :quantity, :category_id, :measurement, :supplier_id, :code)
     end
 end
