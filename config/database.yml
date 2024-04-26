@@ -1,22 +1,20 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  host: db
-  username: postgres
-  password: password
   pool: 5
+  username: <%= ENV['DATABASE_USERNAME'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
+  host: <%= ENV['DATABASE_URL'] %>
+  port: <%= ENV['DATABASE_PORT'] %>
 
 development:
   <<: *default
-  database: myapp_development
-
+  database: <%= ENV['DATABASE_NAME'] %>
 
 test:
   <<: *default
-  database: myapp_test
+  database: <%= ENV['DATABASE_NAME'] %>
 
-# production:
-#   <<: *default
-#   database: stocon-api_production
-#   username: stocon-api
-#   password: <%= ENV['STOCON-API_DATABASE_PASSWORD'] %>
+production:
+  <<: *default
+  database: <%= ENV['DATABASE_NAME'] %>

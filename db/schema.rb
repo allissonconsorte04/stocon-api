@@ -68,6 +68,9 @@ ActiveRecord::Schema.define(version: 2023_11_17_221759) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "teste", id: :serial, force: :cascade do |t|
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email"
     t.string "password"
