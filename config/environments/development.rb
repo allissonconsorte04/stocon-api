@@ -27,6 +27,16 @@ Rails.application.configure do
     config.cache_store = :null_store
   end
 
+  # Enviar logs para STDOUT
+  config.logger = Logger.new(STDOUT)
+  config.logger.level = Logger::DEBUG
+
+  # Para evitar buffering, especialmente em plataformas como Railway:
+  config.logger.formatter = proc do |severity, datetime, progname, msg|
+    "#{datetime}: #{severity} - #{msg}\n"
+  end
+
+  # Nível de log em desenvolvimento para maior detalhamento
   config.log_level = :debug
 
   # Store uploaded files on the local file system (see config/storage.yml for options)
