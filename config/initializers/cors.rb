@@ -7,7 +7,7 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins 'postgresql://postgres:aPOlTXyVAfKHKtKKRYnuPcZyqhnHPXtW@monorail.proxy.rlwy.net:31294/railway'
+    origins '*'
 
     resource '/v1/*',
       headers: :any,
