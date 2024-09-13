@@ -14,6 +14,7 @@ class JwtAuthMiddleware
     private
 
     def requires_authentication?(env)
+        return false if env['PATH_INFO'] == '/health'
         return false if env['PATH_INFO'] == '/v1/login'
         return true
     end
