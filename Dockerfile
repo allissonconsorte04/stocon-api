@@ -9,15 +9,14 @@ WORKDIR /app
 
 # Copie o Gemfile e o Gemfile.lock e instale as gems
 COPY Gemfile Gemfile.lock ./
-
-# Instalação do Bundler correto
 RUN gem install bundler -v 2.4.22
-
-# Instala as gems no diretório vendor/bundle
 RUN bundle install --path vendor/bundle
 
 # Copie o restante do código-fonte da aplicação
 COPY . .
 
-# Remova o arquivo PID se existir, e inicie o servidor Rails
-CMD ["bash", "-c", "rm -f /app/tmp/pids/server.pid && bundle exec rails s -b '0.0.0.0'"]
+# Remova o arquivo PID se ele existir, para evitar conflitos na reinicialização
+RUN rm -f /app/tmp/pids/server.pid
+
+# Comando para iniciar o servidor Rails
+CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
