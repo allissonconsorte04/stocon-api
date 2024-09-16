@@ -31,4 +31,4 @@ EXPOSE 3000
 ENTRYPOINT ["entrypoint.sh"]
 
 # Comando padrão para iniciar o servidor Rails
-CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
+CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0", "-p", "3000"]
