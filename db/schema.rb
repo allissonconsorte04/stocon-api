@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_11_17_221759) do
+ActiveRecord::Schema.define(version: 2024_11_06_014700) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,6 +59,27 @@ ActiveRecord::Schema.define(version: 2023_11_17_221759) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "sale_items", force: :cascade do |t|
+    t.bigint "sale_id"
+    t.bigint "product_id"
+    t.integer "quantity"
+    t.decimal "unit_price"
+    t.decimal "total_price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_sale_items_on_product_id"
+    t.index ["sale_id"], name: "index_sale_items_on_sale_id"
+  end
+
+  create_table "sales", force: :cascade do |t|
+    t.bigint "user_id"
+    t.datetime "sale_date"
+    t.decimal "total_amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_sales_on_user_id"
+  end
+
   create_table "suppliers", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -66,9 +87,6 @@ ActiveRecord::Schema.define(version: 2023_11_17_221759) do
     t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "teste", id: :serial, force: :cascade do |t|
   end
 
   create_table "users", force: :cascade do |t|
@@ -90,5 +108,8 @@ ActiveRecord::Schema.define(version: 2023_11_17_221759) do
   add_foreign_key "inventories_products", "products"
   add_foreign_key "products", "categories"
   add_foreign_key "products", "suppliers"
+  add_foreign_key "sale_items", "products"
+  add_foreign_key "sale_items", "sales"
+  add_foreign_key "sales", "users"
   add_foreign_key "users", "roles"
 end

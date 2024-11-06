@@ -26,7 +26,7 @@ class JwtAuthMiddleware
                 secret_key = 'seu_segredo_secreto'
                 decoded_token = JWT.decode(token, secret_key, true, algorithm: 'HS256')
                 return @app.call(env)
-            rescue JWT::DecodedError
+            rescue JWT::DecodeError # Atualizado para DecodeError
                 return [401, { 'Content-Type' => 'application/json' }, ['{"error": "Token JWT inválido"}']]
             end
         else
