@@ -13,5 +13,6 @@ Rails.application.routes.draw do
     resources :roles
     resources :categories
     resources :sales
+    get '/dashboard', to: 'dashboard#index'
   end
 end
