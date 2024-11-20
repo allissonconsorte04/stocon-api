@@ -37,6 +37,19 @@ class V1::ProductsController < ApplicationController
     @product.destroy
   end
 
+  def find_by_bar_code
+    @product = Product.find_by(bar_code: params[:bar_code])
+
+    if @product
+      render json: @product.to_json(include: {
+        supplier: { except: [:created_at, :updated_at] },
+        category: { except: [:created_at, :updated_at] },
+      })
+    else
+      render json: { error: 'Produto não encontrado' }, status: :not_found
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_product

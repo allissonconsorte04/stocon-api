@@ -4,7 +4,11 @@ Rails.application.routes.draw do
     post '/login', to: 'auth#login'
     resources :suppliers
     resources :inventories
-    resources :products
+    resources :products do
+      collection do
+        get 'find_by_bar_code/:bar_code', to: 'products#find_by_bar_code'
+      end
+    end
     resources :users
     resources :roles
     resources :categories
