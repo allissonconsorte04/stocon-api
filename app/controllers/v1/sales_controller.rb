@@ -1,4 +1,25 @@
 class V1::SalesController < ApplicationController
+  def index
+    @sales = Sale.includes(:sale_items, :user).all
+
+    render json: @sales.to_json(
+      include: {
+        sale_items: {
+          include: {
+            product: {
+              only: [:name, :price]
+            }
+          },
+          only: [:quantity, :unit_price, :total_price]
+        },
+        user: {
+          only: [:id, :name]
+        }
+      },
+      except: [:updated_at]
+    )
+  end
+
   def create
     @sale = Sale.new(sale_params)
     @sale.sale_date = DateTime.now
