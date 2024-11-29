@@ -14,5 +14,6 @@ Rails.application.routes.draw do
     resources :categories
     resources :sales
     get '/dashboard', to: 'dashboard#index'
+    get '/dashboard/sales_and_products_by_date', to: 'dashboard#sales_and_products_by_date'
   end
 end
